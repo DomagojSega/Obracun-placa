@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "Manrope-Bold";
+    src: url(fonts/Manrope-Bold.ttf);
+}
+
+@font-face {
+    font-family: "Manrope-Medium";
+    src: url(fonts/Manrope-Medium.ttf);
+}
+
+@font-face {
+    font-family: "Manrope-ExtraBold";
+    src: url(fonts/Manrope-ExtraBold.ttf);
+}
+
+.body-text{
+    font-family:Manrope-Medium;
+    color:#343857;
+}
+
+.title-text{
+    font-family: Manrope-Bold;
+    color:#343857;
+}
+
+a{
+    text-decoration:none;
+    color: #7E7E7E;
+}
+
+.nav-text{
+    font-family: Manrope-Medium;
+    font-size: 18px;
+}
+
+.nav-active{
+    font-family: Manrope-Bold;
+    font-size:18px;
+    color:#343857;
+}
+
+.extrabold{
+    font-family:Manrope-ExtraBold;
+}
