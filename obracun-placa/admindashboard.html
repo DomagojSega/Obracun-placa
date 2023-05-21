@@ -10,23 +10,26 @@
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="src/jsobjects.js"></script>
     <title>Obracun placa</title>
+    <script>
+        const handleLogout = () => {
+            sessionStorage.clear();
+            window.location.href="login.html";
+        }
+    </script>
 </head>
 <body>
     <div class="container-fluid" style="background-color:#EFEFEF">
         <div class="row" style="height:100vh; padding-top:100px;">
             <div class="col-3" style="border-right: 1px solid #7E7E7E;">
-                <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:100px;">
+                <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:10%; flex-wrap:wrap;">
                     <div style="width:40%">
                         <img style="width:92px; height:88px;" src="img/goc.png" alt="Slika korisnika">
                     </div>
-                    <div style="width:40%; align-self:center;">
-                        <div>
-                            Gordan Paun
-                        </div>
-                        <div>
-                            UREDI PROFIL
-                        </div>
+                    <div style="width:60%; align-self:center;">
+                        <div id="userFullName" class="black-bold" style="font-size:22px;"></div>
+                        <a href="" style="font-size:16px;">UREDI PROFIL</a>  
                     </div>
                 </div>
                 <div class="mt-5" style="display:flex; flex-direction: column; height:65%; justify-content:space-between; padding-top:10%; padding-left:100px;">
@@ -38,7 +41,7 @@
                                 &nbsp&nbsp Nadzorna ploča</a></li>
                             <li><a href="">
                                 <span class="fa-solid fa-scale-balanced" style="color:#343857;"></span>
-                                &nbsp&nbsp Stope</a></li>
+                                &nbsp&nbspStope</a></li>
                             <li><a href="">
                                 <span class="fa-solid fa-paper-plane" style="color:#343857;"></span>
                                 &nbsp&nbsp Izdane plaće</a></li>
@@ -51,7 +54,7 @@
                         </ul>
                     </nav>
                     <div class="nav-text" style="justify-self: flex-end;">
-                        <a href=""> 
+                        <a href="javascript:handleLogout()"> 
                             <span class="fa-solid fa-right-from-bracket" style="color:#343857;"></span>
                             &nbsp&nbsp Odjava</a>
                     </div>
@@ -70,5 +73,14 @@
             </div>
         </div>
     </div>
+    <script>
+        window.onload = () => {
+            let userFullName = document.getElementById("userFullName");
+            let userIndex = parseInt(sessionStorage.getItem("userIndex"));
+            let firstname = users[userIndex]["firstname"];
+            let lastname = users[userIndex]["lastname"];
+            userFullName.innerText=firstname + " " + lastname;
+        }
+    </script>
 </body>
 </html>

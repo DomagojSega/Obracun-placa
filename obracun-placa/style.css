@@ -42,3 +42,8 @@ a{
 .extrabold{
     font-family:Manrope-ExtraBold;
 }
+
+.black-bold{
+    font-family: Manrope-Bold;
+    color:#262626;
+}
