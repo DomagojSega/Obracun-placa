@@ -59,33 +59,53 @@
         }
 
         const handleObracunPlace = () =>{
-            let selectedUserIndex = document.getElementById("selectZaposlenik").value;
-            let userID = users[selectedUserIndex]["id"];
-            let selectedMjesec = document.getElementById("mjesec").value;
-            let selectedGodina = document.getElementById("godina").value;
-            let inputPrekRad = document.getElementById("prekRad").value;
-            let inputBonusi = document.getElementById("bonusi").value;
-            let inputBolovanje = document.getElementById("bolovanje").value;
-            let inputGodOdmor = document.getElementById("godOdmor").value;
-            
-            
-            
-            let obracunPush = {
-                "id":obracuniUpdated.length+1,
-                "userid":parseInt(userID),
-                "mjesec":parseInt(selectedMjesec),
-                "godina":parseInt(selectedGodina),
-                "prekovremeni":parseInt(inputPrekRad),
-                "bonusi":parseInt(inputBonusi),
-                "godisnji":parseInt(inputGodOdmor),
-                "bolovanje":parseInt(inputBolovanje),
-                "bruto":1200,
-                "neto":900
+            let errorMessage = document.getElementById("errorMessage")
+            if( document.getElementById("brutoPlaca").value == ""){
+        
+                let selectedUserIndex = document.getElementById("selectZaposlenik").value;
+                let userID = parseInt(usersUpdated[selectedUserIndex]["id"]);
+                let selectedMjesec = parseInt(document.getElementById("mjesec").value);
+                let selectedGodina = parseInt(document.getElementById("godina").value);
+                let inputPrekRad = parseInt(document.getElementById("prekRad").value);
+                let inputBonusi = parseFloat(document.getElementById("bonusi").value);
+                let inputBolovanje = parseInt(document.getElementById("bolovanje").value);
+                let inputGodOdmor = parseInt(document.getElementById("godOdmor").value);
+
+                let userSatnica = parseInt(usersUpdated[selectedUserIndex]["satnica"]);
+                let ukupnoSati = parseInt(stopeUpdated[0]["ukupnoSati"]);
+                let faktorPrekRad = parseFloat(stopeUpdated[0]["prekRad"]);
+                let faktorGodOdmor = parseFloat(stopeUpdated[0]["godOdmor"]);
+                let faktorBolovanje = parseFloat(stopeUpdated[0]["bolovanje"]);
+                let mirovinskiStup = parseFloat(stopeUpdated[0]["mirovinskiStup"]);
+                let porezStopa = parseFloat(stopeUpdated[0]["porez"]);
+
+                let calcBruto = userSatnica * ((ukupnoSati - 8 * (inputGodOdmor + inputBolovanje)) +
+                                        8 * inputGodOdmor * faktorGodOdmor + 
+                                        8 * inputBolovanje * faktorBolovanje +
+                                        inputPrekRad * faktorPrekRad) + inputBonusi;
+
+                let calcNeto = (calcBruto * (100-mirovinskiStup)/100) * (100 - porezStopa)/100;
+
+                let obracunPush = {
+                    "id":obracuniUpdated.length+1,
+                    "userid":userID,
+                    "mjesec":selectedMjesec,
+                    "godina":selectedGodina,
+                    "prekovremeni":inputPrekRad,
+                    "bonusi":inputBonusi,
+                    "godisnji":inputGodOdmor,
+                    "bolovanje":inputBolovanje,
+                    "bruto":calcBruto,
+                    "neto":calcNeto
+                }
+                obracuniUpdated.push(obracunPush);
+                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
+                handleUserChange();
+                errorMessage.innerText = "";
             }
-            obracuniUpdated.push(obracunPush);
-            sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
-            handleUserChange();
-            
+            else{
+                errorMessage.innerText = "Ova plaća je već obračunata!";
+            } 
         }
     </script>
 </head>
@@ -226,12 +246,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-4">
+                <div class="row pt-4 mb-4">
                     <button type="button" class="btn btn-primary btn-lg me-4" 
                     style="background-color:#525798; border-color:#525798; width:40%;"
                     onclick="handleObracunPlace()">OBRAČUNAJ</button>
                     <button type="button" class="btn btn-primary btn-lg" 
                     style="background-color:#525798; border-color:#525798; width:20%;">UREDI</button>
+                </div>
+                <div class="row pt-4 mb-4 body-text text-center" 
+                    style="color:red; font-size:20px;">
+                    <p id="errorMessage" ></p>
                 </div>
             </div>
             <div class="col-3" >
