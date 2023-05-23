@@ -13,7 +13,8 @@
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="src/jsobjects.js"></script>
+    <script src="src/users.js"></script>
+    <script src="src/obracuni.js"></script>
     <title>Obracun placa</title>
     <script>
         const handleLogout = () => {
@@ -25,6 +26,34 @@
             let selectedUserIndex = document.getElementById("selectZaposlenik").value;
             let changeOIB = document.getElementById("oib");
             changeOIB.value = users[selectedUserIndex]["oib"];
+            let userID = users[selectedUserIndex]["id"];
+            let selectedMjesec = document.getElementById("mjesec").value;
+            let selectedGodina = document.getElementById("godina").value;
+            let inputPrekRad = document.getElementById("prekRad");
+            let inputBonusi = document.getElementById("bonusi");
+            let inputBolovanje = document.getElementById("bolovanje");
+            let inputGodOdmor = document.getElementById("godOdmor");
+            let inputBruto = document.getElementById("brutoPlaca");
+            let inputNeto = document.getElementById("netoPlaca");
+
+            let obracunIndex = obracuni.findIndex(obr => (obr.godina == selectedGodina) && 
+                            (obr.mjesec == selectedMjesec) && (obr.userid == userID));
+            if(obracunIndex != -1){
+                inputPrekRad.value=obracuni[obracunIndex]["prekovremeni"];
+                inputBonusi.value=obracuni[obracunIndex]["bonusi"];
+                inputGodOdmor.value=obracuni[obracunIndex]["godisnji"];
+                inputBolovanje.value=obracuni[obracunIndex]["bolovanje"];
+                inputBruto.value=obracuni[obracunIndex]["bruto"];
+                inputNeto.value=obracuni[obracunIndex]["neto"];  
+            }
+            else{
+                inputPrekRad.value="";
+                inputBonusi.value="";
+                inputGodOdmor.value="";
+                inputBolovanje.value="";
+                inputBruto.value="";
+                inputNeto.value="";
+            }
         }
     </script>
 </head>
@@ -90,13 +119,15 @@
                 <div class="row mb-4">
                     <div class="col-3">
                         <label for="mjesec" class="label-text" style="font-size:12px;">Mjesec</label>
-                        <input type="text" name="mjesec" class="form-control body-text" 
-                        id="mjesec">
+                        <select class="form-select mb-2" id="mjesec"
+                        onchange="handleUserChange()">
+                        </select>
                     </div>
                     <div class="col-3">
                         <label for="godina" class="label-text" style="font-size:12px;">Godina</label>
-                        <input type="text" name="godina" class="form-control body-text" 
-                        id="godina" >
+                        <select class="form-select mb-2" id="godina"
+                        onchange="handleUserChange()">
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -146,7 +177,7 @@
                         <label for="brutoPlaca" class="label-text" style="font-size:12px;">Bruto plaća</label>
                         <div class="input-group">
                             <input type="text" name="brutoPlaca" class="form-control body-text" 
-                            id="brutoPlaca" >
+                            id="brutoPlaca" disabled>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">€</div>
                             </div>
@@ -156,7 +187,7 @@
                         <label for="netoPlaca" class="label-text" style="font-size:12px;">Neto plaća</label>
                         <div class="input-group">
                             <input type="text" name="netoPlaca" class="form-control body-text" 
-                            id="netoPlaca" >
+                            id="netoPlaca" disabled>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">€</div>
                             </div>
@@ -178,18 +209,36 @@
 </div>
     <script>
         window.onload = () => {
+            const mjeseci = [1,2,3,4,5,6,7,8,9,10,11,12];
+            const godine = [2022,2023];
             let userFullName = document.getElementById("userFullName");
             let userIndex = parseInt(sessionStorage.getItem("userIndex"));
             let firstname = users[userIndex]["firstname"];
             let lastname = users[userIndex]["lastname"];
             userFullName.innerText=firstname + " " + lastname;
             let selectZaposlenik = document.getElementById("selectZaposlenik");
-            selectBody="<option selected>Izaberi...</option>";
+            selectBody='<option value="" disabled selected hidden>Izaberi...</option>';
             users.map((user, i) => {
                                 selectBody += `
                                     <option value="${i}">${user.firstname} ${user.lastname}</option>`;
                             });
-                            selectZaposlenik.innerHTML = selectBody;
+            selectZaposlenik.innerHTML = selectBody;
+            
+            let selectMjesec = document.getElementById("mjesec");
+            selectMjesecBody="";
+            mjeseci.map(mjesec => {
+                                selectMjesecBody += `
+                                    <option value="${mjesec}">${mjesec}</option>`;
+            });
+            selectMjesec.innerHTML = selectMjesecBody;
+
+            let selectGodina = document.getElementById("godina");
+            selectGodinaBody="";
+            godine.map(godina => {
+                                selectGodinaBody += `
+                                    <option value="${godina}">${godina}</option>`;
+            });
+            selectGodina.innerHTML = selectGodinaBody;
         }
     </script>
 </body>
