@@ -6,6 +6,7 @@ users = [
     "firstname":"Gordan",
     "lastname":"Paun",
     "oib":10112345678,
+    "satnica":10,
     "role":"admin"
     },
     {
@@ -15,5 +16,6 @@ users = [
     "firstname":"Domagoj",
     "lastname":"Šega",
     "oib":10187654321,
+    "satnica":5,
     "role":"user"
 }];

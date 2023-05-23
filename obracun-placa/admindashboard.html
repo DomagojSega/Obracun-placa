@@ -15,14 +15,16 @@
     <link rel="stylesheet" href="style.css">
     <script src="src/users.js"></script>
     <script src="src/obracuni.js"></script>
+    <script src="src/stope.js"></script>
     <title>Obracun placa</title>
     <script>
         const handleLogout = () => {
-            sessionStorage.clear();
+            sessionStorage.removeItem("userIndex");
             window.location.href="login.html";
         }
         
         const handleUserChange = () =>{
+            
             let selectedUserIndex = document.getElementById("selectZaposlenik").value;
             let changeOIB = document.getElementById("oib");
             changeOIB.value = users[selectedUserIndex]["oib"];
@@ -36,15 +38,15 @@
             let inputBruto = document.getElementById("brutoPlaca");
             let inputNeto = document.getElementById("netoPlaca");
 
-            let obracunIndex = obracuni.findIndex(obr => (obr.godina == selectedGodina) && 
+            let obracunIndex = obracuniUpdated.findIndex(obr => (obr.godina == selectedGodina) && 
                             (obr.mjesec == selectedMjesec) && (obr.userid == userID));
             if(obracunIndex != -1){
-                inputPrekRad.value=obracuni[obracunIndex]["prekovremeni"];
-                inputBonusi.value=obracuni[obracunIndex]["bonusi"];
-                inputGodOdmor.value=obracuni[obracunIndex]["godisnji"];
-                inputBolovanje.value=obracuni[obracunIndex]["bolovanje"];
-                inputBruto.value=obracuni[obracunIndex]["bruto"];
-                inputNeto.value=obracuni[obracunIndex]["neto"];  
+                inputPrekRad.value=obracuniUpdated[obracunIndex]["prekovremeni"];
+                inputBonusi.value=obracuniUpdated[obracunIndex]["bonusi"];
+                inputGodOdmor.value=obracuniUpdated[obracunIndex]["godisnji"];
+                inputBolovanje.value=obracuniUpdated[obracunIndex]["bolovanje"];
+                inputBruto.value=obracuniUpdated[obracunIndex]["bruto"];
+                inputNeto.value=obracuniUpdated[obracunIndex]["neto"];  
             }
             else{
                 inputPrekRad.value="";
@@ -54,6 +56,36 @@
                 inputBruto.value="";
                 inputNeto.value="";
             }
+        }
+
+        const handleObracunPlace = () =>{
+            let selectedUserIndex = document.getElementById("selectZaposlenik").value;
+            let userID = users[selectedUserIndex]["id"];
+            let selectedMjesec = document.getElementById("mjesec").value;
+            let selectedGodina = document.getElementById("godina").value;
+            let inputPrekRad = document.getElementById("prekRad").value;
+            let inputBonusi = document.getElementById("bonusi").value;
+            let inputBolovanje = document.getElementById("bolovanje").value;
+            let inputGodOdmor = document.getElementById("godOdmor").value;
+            
+            
+            
+            let obracunPush = {
+                "id":obracuniUpdated.length+1,
+                "userid":parseInt(userID),
+                "mjesec":parseInt(selectedMjesec),
+                "godina":parseInt(selectedGodina),
+                "prekovremeni":parseInt(inputPrekRad),
+                "bonusi":parseInt(inputBonusi),
+                "godisnji":parseInt(inputGodOdmor),
+                "bolovanje":parseInt(inputBolovanje),
+                "bruto":1200,
+                "neto":900
+            }
+            obracuniUpdated.push(obracunPush);
+            sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
+            handleUserChange();
+            
         }
     </script>
 </head>
@@ -77,7 +109,7 @@
                             <li><a href="">
                                 <span class="fa-solid fa-chart-line" style="color:#343857;"></span> 
                                 &nbsp&nbsp Nadzorna ploča</a></li>
-                            <li><a href="">
+                            <li><a href="stope.html">
                                 <span class="fa-solid fa-scale-balanced" style="color:#343857;"></span>
                                 &nbsp&nbspStope</a></li>
                             <li><a href="">
@@ -196,7 +228,8 @@
                 </div>
                 <div class="row pt-4">
                     <button type="button" class="btn btn-primary btn-lg me-4" 
-                    style="background-color:#525798; border-color:#525798; width:40%;">OBRAČUNAJ</button>
+                    style="background-color:#525798; border-color:#525798; width:40%;"
+                    onclick="handleObracunPlace()">OBRAČUNAJ</button>
                     <button type="button" class="btn btn-primary btn-lg" 
                     style="background-color:#525798; border-color:#525798; width:20%;">UREDI</button>
                 </div>
@@ -208,8 +241,12 @@
     </div>
 </div>
     <script>
+        let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+        let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+        let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+
         window.onload = () => {
-            const mjeseci = [1,2,3,4,5,6,7,8,9,10,11,12];
+            const mjeseci = ["Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"];
             const godine = [2022,2023];
             let userFullName = document.getElementById("userFullName");
             let userIndex = parseInt(sessionStorage.getItem("userIndex"));
@@ -226,9 +263,9 @@
             
             let selectMjesec = document.getElementById("mjesec");
             selectMjesecBody="";
-            mjeseci.map(mjesec => {
+            mjeseci.map((mjesec, i) => {
                                 selectMjesecBody += `
-                                    <option value="${mjesec}">${mjesec}</option>`;
+                                    <option value="${i+1}">${mjesec}</option>`;
             });
             selectMjesec.innerHTML = selectMjesecBody;
 
@@ -239,6 +276,19 @@
                                     <option value="${godina}">${godina}</option>`;
             });
             selectGodina.innerHTML = selectGodinaBody;
+
+            if(!obracuniUpdated){
+                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
+                obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+            }
+            if(!stopeUpdated){
+                sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
+                stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+            }
+            if(!usersUpdated){
+                sessionStorage.setItem("usersUpdated", JSON.stringify(users));
+                usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+            }
         }
     </script>
 </body>

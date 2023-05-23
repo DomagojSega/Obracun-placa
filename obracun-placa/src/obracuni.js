@@ -58,5 +58,5 @@ obracuni = [
     "bolovanje":0,
     "bruto":1300,
     "neto":1000
-    },
+    }
 ];
