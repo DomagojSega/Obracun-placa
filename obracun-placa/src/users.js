@@ -1,21 +1,42 @@
 users = [
     {
-    "id":1,
-    "username":"goc",
-    "password":"123",
-    "firstname":"Gordan",
-    "lastname":"Paun",
-    "oib":10112345678,
-    "satnica":10,
-    "role":"admin"
+        "id":1,
+        "username":"goc",
+        "password":"123",
+        "firstname":"Gordan",
+        "lastname":"Paun",
+        "oib":10112345678,
+        "satnica":10,
+        "role":"admin"
     },
     {
-    "id":2,
-    "username":"domi",
-    "password":"123",
-    "firstname":"Domagoj",
-    "lastname":"Šega",
-    "oib":10187654321,
-    "satnica":5,
-    "role":"user"
-}];
+        "id":2,
+        "username":"domi",
+        "password":"123",
+        "firstname":"Domagoj",
+        "lastname":"Šega",
+        "oib":10187654321,
+        "satnica":5,
+        "role":"user"
+    },
+    {
+        "id":3,
+        "username":"gašo",
+        "password":"321",
+        "firstname":"Domagoj",
+        "lastname":"Gašpar",
+        "oib":10151531325,
+        "satnica":3,
+        "role":"user"
+    },
+    {
+        "id":4,
+        "username":"mile",
+        "password":"321",
+        "firstname":"Matej",
+        "lastname":"Žunić",
+        "oib":10134358573,
+        "satnica":7,
+        "role":"user"
+    }
+];

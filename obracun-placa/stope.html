@@ -37,8 +37,8 @@
 </head>
 <body>
     <div class="container-fluid" style="background-color:#EFEFEF">
-        <div class="row" style="height:100vh; padding-top:100px;">
-            <div class="col-3" style="border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
+        <div class="row" style="height:100vh;">
+            <div class="col-3" style="margin-top:100px; border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
                 <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:10%; flex-wrap:wrap;">
                     <div class="col-6 text-center">
                         <img style="width:92px; height:88px;" src="img/goc.png" alt="Slika korisnika">
@@ -52,19 +52,19 @@
                     <nav class="nav-text">
                         <ul style="list-style:none; padding-left:0; justify-self:flex-start;">
                             <li class="extrabold" style="color:#343857; font-size:16px;">INFO</li>
-                            <li><a href="">
+                            <li><a href="admindashboard.html">
                                 <span class="fa-solid fa-chart-line" style="color:#343857;"></span> 
                                 &nbsp&nbsp Nadzorna ploča</a></li>
                             <li><a  class="nav-active" href="stope.html">
                                 <span class="fa-solid fa-scale-balanced" style="color:#343857;"></span>
                                 &nbsp&nbspStope</a></li>
-                            <li><a href="">
+                            <li><a href="izdaneplace.html">
                                 <span class="fa-solid fa-paper-plane" style="color:#343857;"></span>
                                 &nbsp&nbsp Izdane plaće</a></li>
-                            <li><a href="admindashboard.html">
+                            <li><a href="obracunplaca.html">
                                 <span class="fa-solid fa-briefcase" style="color:#343857;"></span>
                                 &nbsp&nbsp Zaposlenici i plaće</a></li>
-                            <li><a href="">
+                            <li><a href="adminsettings.html">
                                 <span class="fa-solid fa-gear" style="color:#343857;"></span> 
                                 &nbsp&nbsp Postavke</a></li>
                         </ul>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 ms-5">
+            <div class="col-5 ps-5" style="margin-top:100px;"> 
                 <div class="row"><span class="fa-solid fa-scale-balanced" style="color:#343857; font-size:38px;"></span></div>
                 <div class="row nav-active" style="font-size:37px; padding:12px;">Stope</div>
                 <div class="row mb-4 w-50">
@@ -145,7 +145,8 @@
                     onclick="handleStopeChange()">UREDI</button>
                 </div>
             </div>
-            <div class="col-3" >
+            <div class="col-4" style="background-color:#5B6BBF; display:flex; align-items:center;">
+                <img src="/img/stope-ad.png" alt="" style="position:absolute; right:0; width:60%; height:auto;">
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@
     <script src="src/users.js"></script>
     <script src="src/obracuni.js"></script>
     <script src="src/stope.js"></script>
+    <script src="src/obavijesti.js"></script>
     <title>Obracun placa</title>
     <script>
         const handleLogout = () => {
@@ -111,8 +112,8 @@
 </head>
 <body>
     <div class="container-fluid" style="background-color:#EFEFEF">
-        <div class="row" style="height:100vh; padding-top:100px;">
-            <div class="col-3" style="border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
+        <div class="row" style="height:100vh; ">
+            <div class="col-3" style="margin-top:100px; border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
                 <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:10%; flex-wrap:wrap;">
                     <div class="col-6 text-center">
                         <img style="width:92px; height:88px;" src="img/goc.png" alt="Slika korisnika">
@@ -126,19 +127,19 @@
                     <nav class="nav-text">
                         <ul style="list-style:none; padding-left:0; justify-self:flex-start;">
                             <li class="extrabold" style="color:#343857; font-size:16px;">INFO</li>
-                            <li><a href="">
+                            <li><a class="nav-active" href="admindashboard.html">
                                 <span class="fa-solid fa-chart-line" style="color:#343857;"></span> 
                                 &nbsp&nbsp Nadzorna ploča</a></li>
                             <li><a href="stope.html">
                                 <span class="fa-solid fa-scale-balanced" style="color:#343857;"></span>
                                 &nbsp&nbspStope</a></li>
-                            <li><a href="">
+                            <li><a href="izdaneplace.html">
                                 <span class="fa-solid fa-paper-plane" style="color:#343857;"></span>
                                 &nbsp&nbsp Izdane plaće</a></li>
-                            <li><a class="nav-active" href="">
+                            <li><a href="obracunplaca.html">
                                 <span class="fa-solid fa-briefcase" style="color:#343857;"></span>
                                 &nbsp&nbsp Zaposlenici i plaće</a></li>
-                            <li><a href="">
+                            <li><a href="adminsettings.html">
                                 <span class="fa-solid fa-gear" style="color:#343857;"></span> 
                                 &nbsp&nbsp Postavke</a></li>
                         </ul>
@@ -150,156 +151,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 ms-5">
-                <div class="row"><span class="fa-solid fa-briefcase" style="color:#343857; font-size:38px;"></span></div>
-                <div class="row nav-active" style="font-size:37px; padding:12px;">Zaposlenici i plaće</div>
-                <div class="row">
-                    <div class="col-6">
-                    <label for="selectZaposlenik" class="label-text" style="font-size:12px;">Zaposlenici</label>
-                    <select class="form-select mb-2" id="selectZaposlenik"
-                    onchange="handleUserChange()">
-                    </select>
-                </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-6">
-                        <label for="oib" class="label-text" style="font-size:12px;">OIB</label>
-                        <input type="text" name="oib" class="form-control body-text mb-3" 
-                        id="oib" disabled>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-3">
-                        <label for="mjesec" class="label-text" style="font-size:12px;">Mjesec</label>
-                        <select class="form-select mb-2" id="mjesec"
-                        onchange="handleUserChange()">
-                        </select>
-                    </div>
-                    <div class="col-3">
-                        <label for="godina" class="label-text" style="font-size:12px;">Godina</label>
-                        <select class="form-select mb-2" id="godina"
-                        onchange="handleUserChange()">
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-3">
-                        <label for="prekRad" class="label-text" style="font-size:12px;">Prekovremeni rad</label>
-                        <div class="input-group">
-                            <input type="text" name="prekRad" class="form-control body-text" 
-                            id="prekRad" >
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Sati</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <label for="bonusi" class="label-text" style="font-size:12px;">Bonusi</label>
-                        <div class="input-group">
-                            <input type="text" name="bonusi" class="form-control body-text" 
-                            id="bonusi" >
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">€</div>
-                            </div>
-                            </div>
-                    </div>
-                    <div class="col-3">
-                        <label for="godOdmor" class="label-text" style="font-size:12px;">Godišnji odmor</label>
-                        <div class="input-group">
-                            <input type="text" name="godOdmor" class="form-control body-text" 
-                            id="godOdmor" >
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Dana</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <label for="bolovanje" class="label-text" style="font-size:12px;">Bolovanje</label>
-                        <div class="input-group">
-                            <input type="text" name="bolovanje" class="form-control body-text" 
-                            id="bolovanje" >
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Dana</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-3">
-                        <label for="brutoPlaca" class="label-text" style="font-size:12px;">Bruto plaća</label>
-                        <div class="input-group">
-                            <input type="text" name="brutoPlaca" class="form-control body-text" 
-                            id="brutoPlaca" disabled>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">€</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <label for="netoPlaca" class="label-text" style="font-size:12px;">Neto plaća</label>
-                        <div class="input-group">
-                            <input type="text" name="netoPlaca" class="form-control body-text" 
-                            id="netoPlaca" disabled>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">€</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-4 mb-4">
-                    <button type="button" class="btn btn-primary btn-lg me-4" 
-                    style="background-color:#525798; border-color:#525798; width:40%;"
-                    onclick="handleObracunPlace()">OBRAČUNAJ</button>
-                    <button type="button" class="btn btn-primary btn-lg" 
-                    style="background-color:#525798; border-color:#525798; width:20%;">UREDI</button>
-                </div>
-                <div class="row pt-4 mb-4 body-text text-center" 
-                    style="color:red; font-size:20px;">
-                    <p id="errorMessage" ></p>
-                </div>
+            <div class="col-7 ps-5" style="padding-top:100px;">
+                <div class="row"><span class="fa-solid fa-chart-line" style="color:#343857; font-size:38px;"></span></div>
+                <div class="row nav-active" style="font-size:37px; padding:12px;">Nadzorna ploča</div>
+                
             </div>
-            <div class="col-3" >
-
+            <div class="col-2" style="background-color:#5B6BBF; display:flex; align-items:center;">
+                <img src="img/guy-top-right.png" style="position:absolute; right:0; top:0; width:200px;" alt="">
+                <div></div>
+                <img src="img/rocket-small.png" style="position:absolute; right:0; bottom:0; width: 16.66666667%;" alt="">
             </div>
-        </div>
     </div>
 </div>
     <script>
         let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
         let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
         let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
-
+        let obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+        let userIndex = parseInt(sessionStorage.getItem("userIndex"));
         window.onload = () => {
             const mjeseci = ["Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"];
             const godine = [2022,2023];
             let userFullName = document.getElementById("userFullName");
-            let userIndex = parseInt(sessionStorage.getItem("userIndex"));
             let firstname = users[userIndex]["firstname"];
             let lastname = users[userIndex]["lastname"];
             userFullName.innerText=firstname + " " + lastname;
-            let selectZaposlenik = document.getElementById("selectZaposlenik");
-            selectBody='<option value="" disabled selected hidden>Izaberi...</option>';
-            users.map((user, i) => {
-                                selectBody += `
-                                    <option value="${i}">${user.firstname} ${user.lastname}</option>`;
-                            });
-            selectZaposlenik.innerHTML = selectBody;
             
-            let selectMjesec = document.getElementById("mjesec");
-            selectMjesecBody="";
-            mjeseci.map((mjesec, i) => {
-                                selectMjesecBody += `
-                                    <option value="${i+1}">${mjesec}</option>`;
-            });
-            selectMjesec.innerHTML = selectMjesecBody;
 
-            let selectGodina = document.getElementById("godina");
-            selectGodinaBody="";
-            godine.map(godina => {
-                                selectGodinaBody += `
-                                    <option value="${godina}">${godina}</option>`;
-            });
-            selectGodina.innerHTML = selectGodinaBody;
+    
 
             if(!obracuniUpdated){
                 sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
@@ -312,6 +191,10 @@
             if(!usersUpdated){
                 sessionStorage.setItem("usersUpdated", JSON.stringify(users));
                 usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+            }
+            if(!obavijestiUpdated){
+                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
+                obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
             }
         }
     </script>

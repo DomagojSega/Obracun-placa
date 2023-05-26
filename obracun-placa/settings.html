@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
+    crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="src/users.js"></script>
+    <script src="src/obracuni.js"></script>
+    <script src="src/stope.js"></script>
+    <script src="src/obavijesti.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Obracun placa</title>
+    <script>
+        const handleLogout = () => {
+            sessionStorage.removeItem("userIndex");
+            window.location.href="login.html";
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="container-fluid" style="background-color:#EFEFEF">
+        <div class="row" style="height:100vh;">
+            <div class="col-3" style="margin-top:100px; border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
+                <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:10%; flex-wrap:wrap;">
+                    <div class="col-6 text-center">
+                        <img style="width:92px; height:88px; border-radius:20px;" src="img/no-user-image.jpg" alt="Slika korisnika">
+                    </div>
+                    <div  class="col-6" style="align-self:center;">
+                        <div id="userFullName" class="black-bold" style="font-size:22px;"></div>
+                        <a href="settings.html" style="font-size:16px;">UREDI PROFIL</a>  
+                    </div>
+                </div>
+                <div class="mt-5" style="display:flex; flex-direction: column; height:65%; justify-content:space-between; padding-top:10%; padding-left:100px;">
+                    <nav class="nav-text">
+                        <ul style="list-style:none; padding-left:0; justify-self:flex-start;">
+                            <li class="extrabold" style="color:#343857; font-size:16px;">INFO</li>
+                            <li><a  href="userdashboard.html">
+                                <span class="fa-solid fa-chart-line" style="color:#343857;"></span> 
+                                &nbsp&nbsp Nadzorna ploča</a></li>
+                            <li><a href="obavijesti.html">
+                                <span class="fa-solid fa-bell" style="color:#343857;"></span>
+                                &nbsp&nbsp Obavijesti</a></li>
+                            <li><a href="userdata.html">
+                                <span class="fa-solid fa-user" style="color:#343857;"></span>
+                                &nbsp&nbsp Podaci o korisniku</a></li>
+                            <li><a class="nav-active" href="">
+                                <span class="fa-solid fa-gear" style="color:#343857;"></span> 
+                                &nbsp&nbsp Postavke</a></li>
+                        </ul>
+                    </nav>
+                    <div class="nav-text" style="justify-self: flex-end;">
+                        <a href="javascript:handleLogout()"> 
+                            <span class="fa-solid fa-right-from-bracket" style="color:#343857;"></span>
+                            &nbsp&nbsp Odjava</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 ps-5" style="margin-top:100px;">
+                <div class="row"><span class="fa-solid fa-gear" style="color:#343857; font-size:38px;"></span></div>
+                <div class="row nav-active" style="font-size:37px; padding:12px;">Postavke</div>
+                <div class="col-6">
+                    <div class="row mt-4">
+                            <div class="card shadow p-3 mt-2 bg-body rounded" style="width: 25rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Zatraži promjene profila</h5>
+                                    <p class="card-text">Administrator sustava će vam se obratiti u najbržem roku!</p>
+                                    <a href="#" class="btn btn-primary" 
+                                        style="background-color:#525798; border-color:#525798;"
+                                        >Zatraži promjene</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                        <div class="card shadow p-3 mt-2 bg-body rounded" style="width: 25rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Zatraži obračun plaće</h5>
+                                <p class="card-text">Ako vam plaća nije obračunata na vrijeme, zatražite ju!</p>
+                                <a href="#" class="btn btn-primary" 
+                                    style="background-color:#525798; border-color:#525798;"
+                                    >Zatraži obračun plaće</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                            <div class="card shadow p-3 mt-2 bg-body rounded" style="width: 25rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Kritike i savjeti</h5>
+                                    <p class="card-text">Pošaljite nam kritike i savjete za poboljšanje sustava obračuna plaća!</p>
+                                    <a href="#" class="btn btn-primary" 
+                                        style="background-color:#525798; border-color:#525798;"
+                                        >Pošalji</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            <div class="col-3" style="background-color:#5B6BBF; display:flex; align-items:center;">
+                <img src="/img/advertisement.png" alt="" style="position:absolute; right:0; width:60%; height:auto;">
+            </div>
+        
+    </div>
+    <script>
+        let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+        let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+        let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+        let obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+        let userIndex = parseInt(sessionStorage.getItem("userIndex"));
+        let userPaychecksMonthsSorted = [,1200,1300,1100,900,750,,1000,1100,1000,1300,1200];
+
+        window.onload = () => {
+            let userFullName = document.getElementById("userFullName");
+            let firstname = users[userIndex]["firstname"];
+            let lastname = users[userIndex]["lastname"];
+            userFullName.innerText=firstname + " " + lastname;
+            
+
+            if(!obracuniUpdated){
+                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
+                obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+            }
+            if(!stopeUpdated){
+                sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
+                stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+            }
+            if(!usersUpdated){
+                sessionStorage.setItem("usersUpdated", JSON.stringify(users));
+                usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+            }
+            if(!obavijestiUpdated){
+                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
+                obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+            }
+        }
+    </script>
+</body>
+</html>

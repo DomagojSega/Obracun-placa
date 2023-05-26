@@ -14,12 +14,12 @@
 }
 
 .body-text{
-    font-family:Manrope-Medium;
+    font-family:"Manrope-Medium";
     color:#343857;
 }
 
 .title-text{
-    font-family: Manrope-Bold;
+    font-family: "Manrope-Bold";
     color:#343857;
 }
 
@@ -29,22 +29,22 @@ a{
 }
 
 .nav-text{
-    font-family: Manrope-Medium;
+    font-family: "Manrope-Medium";
     font-size: 18px;
 }
 
 .nav-active{
-    font-family: Manrope-Bold;
+    font-family: "Manrope-Bold";
     font-size:18px;
     color:#343857;
 }
 
 .extrabold{
-    font-family:Manrope-ExtraBold;
+    font-family:"Manrope-ExtraBold";
 }
 
 .black-bold{
-    font-family: Manrope-Bold;
+    font-family: "Manrope-Bold";
     color:#262626;
 }
 
@@ -52,3 +52,19 @@ a{
     color:#4D4D4D;
     font-family:"Manrope-Medium";
 }
+
+nav>ul>*{
+    margin-bottom:10px;
+}
+
+.chart-container {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+  }
+
+  .notifications-title{
+    font-family:"Manrope-ExtraBold";
+    font-size:18px;
+    color:#343857;
+  }

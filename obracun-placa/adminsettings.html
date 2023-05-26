@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
+    crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="src/users.js"></script>
+    <script src="src/obracuni.js"></script>
+    <script src="src/stope.js"></script>
+    <title>Obracun placa</title>
+    <script>
+        const handleLogout = () => {
+            sessionStorage.removeItem("userIndex");
+            window.location.href="login.html";
+        }
+
+        const handleUserAdd = () =>{
+            let userID = usersUpdated.length +1;
+            let userName = document.getElementById("userName").value;
+            let userFirstName = document.getElementById("userFirstName").value;
+            let userLastName = document.getElementById("userLastName").value;
+            let userOIB = document.getElementById("userOIB").value;
+            let userPassword = document.getElementById("userPassword").value;
+            let userHour = document.getElementById("userHour").value;
+            let errorMessage = document.getElementById("errorMessage");
+            if(userName == "" || userFirstName == "" || userLastName == "" 
+                            || userOIB == "" || userPassword == "" || userHour ==""){
+                                errorMessage.innerText = "Sva polja moraju biti ispunjena!"
+                            }
+            else{
+                errorMessage.innerText = "";
+
+                let userPush={
+                            "id":userID,
+                            "username":userName,
+                            "password":userPassword,
+                            "firstname":userFirstName,
+                            "lastname":userLastName,
+                            "oib":parseInt(userOIB),
+                            "satnica":parseInt(userHour),
+                            "role":"user"
+                        };
+                usersUpdated.push(userPush);
+                sessionStorage.setItem("usersUpdated", JSON.stringify(usersUpdated));
+                
+                document.getElementById("userName").value="";
+                document.getElementById("userFirstName").value="";
+                document.getElementById("userLastName").value="";
+                document.getElementById("userOIB").value="";
+                document.getElementById("userPassword").value="";
+                document.getElementById("userHour").value="";
+            }   
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid" style="background-color:#EFEFEF">
+        <div class="row" style="height:100vh; ">
+            <div class="col-3" style="margin-top:100px; border-right: 1px solid #7E7E7E; height:calc(100vh - 100px);">
+                <div class="row me-3 pb-5" style="border-bottom: 1px solid #7E7E7E;  padding-left:10%; flex-wrap:wrap;">
+                    <div class="col-6 text-center">
+                        <img style="width:92px; height:88px;" src="img/goc.png" alt="Slika korisnika">
+                    </div>
+                    <div  class="col-6" style="align-self:center;">
+                        <div id="userFullName" class="black-bold" style="font-size:22px;"></div>
+                        <a href="" style="font-size:16px;">UREDI PROFIL</a>  
+                    </div>
+                </div>
+                <div class="mt-5" style="display:flex; flex-direction: column; height:65%; justify-content:space-between; padding-top:10%; padding-left:100px;">
+                    <nav class="nav-text">
+                        <ul style="list-style:none; padding-left:0; justify-self:flex-start;">
+                            <li class="extrabold" style="color:#343857; font-size:16px;">INFO</li>
+                            <li><a href="admindashboard.html">
+                                <span class="fa-solid fa-chart-line" style="color:#343857;"></span> 
+                                &nbsp&nbsp Nadzorna ploča</a></li>
+                            <li><a href="stope.html">
+                                <span class="fa-solid fa-scale-balanced" style="color:#343857;"></span>
+                                &nbsp&nbspStope</a></li>
+                            <li><a href="izdaneplace.html">
+                                <span class="fa-solid fa-paper-plane" style="color:#343857;"></span>
+                                &nbsp&nbsp Izdane plaće</a></li>
+                            <li><a href="obracunplaca.html">
+                                <span class="fa-solid fa-briefcase" style="color:#343857;"></span>
+                                &nbsp&nbsp Zaposlenici i plaće</a></li>
+                            <li><a class="nav-active" href="">
+                                <span class="fa-solid fa-gear" style="color:#343857;"></span> 
+                                &nbsp&nbsp Postavke</a></li>
+                        </ul>
+                    </nav>
+                    <div class="nav-text" style="justify-self: flex-end;">
+                        <a href="javascript:handleLogout()"> 
+                            <span class="fa-solid fa-right-from-bracket" style="color:#343857;"></span>
+                            &nbsp&nbsp Odjava</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7 ps-5" style="padding-top:100px;">
+                <div class="row"><span class="fa-solid fa-gear" style="color:#343857; font-size:38px;"></span></div>
+                <div class="row nav-active" style="font-size:37px; padding:12px;">Postavke</div>
+                <div class="row body-text"><p>Dodaj novog korisnika</p></div>
+                    
+                
+
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" class="form-control" id="userFirstName" placeholder="Ime">
+                    <label for="userFirstName">Ime</label>
+                </div>
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" class="form-control" id="userLastName" placeholder="Prezime">
+                    <label for="userLastName">Prezime</label>
+                </div>
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" class="form-control" id="userOIB" placeholder="OIB">
+                    <label for="userOIB">OIB</label>
+                </div>
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" class="form-control" id="userName" placeholder="Korisničko ime">
+                    <label for="userName">Korisničko ime</label>
+                </div>
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="password" class="form-control" id="userPassword" placeholder="Lozinka">
+                    <label for="userPassword">Lozinka</label>
+                </div>
+
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" class="form-control" id="userHour" placeholder="Satnica">
+                    <label for="userHour">Satnica (u €)</label>
+                </div>
+                <div class="col-6 text-center">
+                    <button type="button" class="btn btn-primary btn-lg me-4" 
+                        style="background-color:#525798; border-color:#525798; width:40%;"
+                        onclick="handleUserAdd()">DODAJ</button>
+                </div>
+                <div class="col-6 pt-4 mb-4 body-text text-center" 
+                    style="color:red; font-size:20px;">
+                    <p id="errorMessage" ></p>
+                </div>
+            </div>
+
+
+            <div class="col-2" style="background-color:#5B6BBF; display:flex; align-items:center;">
+        
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+        let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+        let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+
+        window.onload = () => {
+            const mjeseci = ["Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"];
+            const godine = [2022,2023];
+            let userFullName = document.getElementById("userFullName");
+            let userIndex = parseInt(sessionStorage.getItem("userIndex"));
+            let firstname = users[userIndex]["firstname"];
+            let lastname = users[userIndex]["lastname"];
+            userFullName.innerText=firstname + " " + lastname;
+           
+
+            if(!obracuniUpdated){
+                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
+                obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+            }
+            if(!stopeUpdated){
+                sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
+                stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+            }
+            if(!usersUpdated){
+                sessionStorage.setItem("usersUpdated", JSON.stringify(users));
+                usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+            }
+            
+        }
+    </script>
+</body>
+</html>
