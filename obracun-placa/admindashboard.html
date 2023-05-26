@@ -24,90 +24,22 @@
             window.location.href="login.html";
         }
         
-        const handleUserChange = () =>{
-            
-            let selectedUserIndex = document.getElementById("selectZaposlenik").value;
-            let changeOIB = document.getElementById("oib");
-            changeOIB.value = users[selectedUserIndex]["oib"];
-            let userID = users[selectedUserIndex]["id"];
-            let selectedMjesec = document.getElementById("mjesec").value;
-            let selectedGodina = document.getElementById("godina").value;
-            let inputPrekRad = document.getElementById("prekRad");
-            let inputBonusi = document.getElementById("bonusi");
-            let inputBolovanje = document.getElementById("bolovanje");
-            let inputGodOdmor = document.getElementById("godOdmor");
-            let inputBruto = document.getElementById("brutoPlaca");
-            let inputNeto = document.getElementById("netoPlaca");
-
-            let obracunIndex = obracuniUpdated.findIndex(obr => (obr.godina == selectedGodina) && 
-                            (obr.mjesec == selectedMjesec) && (obr.userid == userID));
-            if(obracunIndex != -1){
-                inputPrekRad.value=obracuniUpdated[obracunIndex]["prekovremeni"];
-                inputBonusi.value=obracuniUpdated[obracunIndex]["bonusi"];
-                inputGodOdmor.value=obracuniUpdated[obracunIndex]["godisnji"];
-                inputBolovanje.value=obracuniUpdated[obracunIndex]["bolovanje"];
-                inputBruto.value=obracuniUpdated[obracunIndex]["bruto"];
-                inputNeto.value=obracuniUpdated[obracunIndex]["neto"];  
-            }
-            else{
-                inputPrekRad.value="";
-                inputBonusi.value="";
-                inputGodOdmor.value="";
-                inputBolovanje.value="";
-                inputBruto.value="";
-                inputNeto.value="";
-            }
-        }
-
-        const handleObracunPlace = () =>{
-            let errorMessage = document.getElementById("errorMessage")
-            if( document.getElementById("brutoPlaca").value == ""){
-        
-                let selectedUserIndex = document.getElementById("selectZaposlenik").value;
-                let userID = parseInt(usersUpdated[selectedUserIndex]["id"]);
-                let selectedMjesec = parseInt(document.getElementById("mjesec").value);
-                let selectedGodina = parseInt(document.getElementById("godina").value);
-                let inputPrekRad = parseInt(document.getElementById("prekRad").value);
-                let inputBonusi = parseFloat(document.getElementById("bonusi").value);
-                let inputBolovanje = parseInt(document.getElementById("bolovanje").value);
-                let inputGodOdmor = parseInt(document.getElementById("godOdmor").value);
-
-                let userSatnica = parseInt(usersUpdated[selectedUserIndex]["satnica"]);
-                let ukupnoSati = parseInt(stopeUpdated[0]["ukupnoSati"]);
-                let faktorPrekRad = parseFloat(stopeUpdated[0]["prekRad"]);
-                let faktorGodOdmor = parseFloat(stopeUpdated[0]["godOdmor"]);
-                let faktorBolovanje = parseFloat(stopeUpdated[0]["bolovanje"]);
-                let mirovinskiStup = parseFloat(stopeUpdated[0]["mirovinskiStup"]);
-                let porezStopa = parseFloat(stopeUpdated[0]["porez"]);
-
-                let calcBruto = userSatnica * ((ukupnoSati - 8 * (inputGodOdmor + inputBolovanje)) +
-                                        8 * inputGodOdmor * faktorGodOdmor + 
-                                        8 * inputBolovanje * faktorBolovanje +
-                                        inputPrekRad * faktorPrekRad) + inputBonusi;
-
-                let calcNeto = (calcBruto * (100-mirovinskiStup)/100) * (100 - porezStopa)/100;
-
-                let obracunPush = {
-                    "id":obracuniUpdated.length+1,
-                    "userid":userID,
-                    "mjesec":selectedMjesec,
-                    "godina":selectedGodina,
-                    "prekovremeni":inputPrekRad,
-                    "bonusi":inputBonusi,
-                    "godisnji":inputGodOdmor,
-                    "bolovanje":inputBolovanje,
-                    "bruto":calcBruto,
-                    "neto":calcNeto
+        const handleNotificationPush = () =>{
+            let obavijestNaslov = document.getElementById("obavijestNaslov").value;
+            let obavijestTijelo = document.getElementById("obavijestTijelo").value;
+            if(obavijestNaslov != "" && obavijestTijelo !=""){
+                let pushNotification={
+                "naslov":obavijestNaslov,
+                "tekst":obavijestTijelo 
                 }
-                obracuniUpdated.push(obracunPush);
-                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
-                handleUserChange();
-                errorMessage.innerText = "";
+                obavijestiUpdated.push(pushNotification);
+                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijestiUpdated));
+                document.getElementById("obavijestNaslov").value="";
+                document.getElementById("obavijestTijelo").value="";
             }
-            else{
-                errorMessage.innerText = "Ova plaća je već obračunata!";
-            } 
         }
+
+        
     </script>
 </head>
 <body>
@@ -154,11 +86,59 @@
             <div class="col-7 ps-5" style="padding-top:100px;">
                 <div class="row"><span class="fa-solid fa-chart-line" style="color:#343857; font-size:38px;"></span></div>
                 <div class="row nav-active" style="font-size:37px; padding:12px;">Nadzorna ploča</div>
+                <div class="row mb-4 extrabold ps-3" style="color:#A8A8A8;">
+                    <div class="col-5">Brzi pristup</div>
+                    <div class="col-7">Pregled</div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title extrabold">Pošalji obavijest</h5>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="obavijestNaslov" placeholder="Naslov">
+                                <label for="obavijestNaslov">Naslov</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="obavijestTijelo" placeholder="Tijelo poruke">
+                                <label for="obavijestTijelo">Tijelo poruke</label>
+                            </div>
+                            <a href="javascript:handleNotificationPush()" class="btn btn-primary" 
+                                                style="background-color:#525798; border-color:#525798;"
+                                                >Pošalji</a>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title extrabold">Zadnji obračun</h5>
+                                <div class="row" id="zadnjiObracun"></div>
+                                <a href="obracunplaca.html" class="btn btn-primary" 
+                                style="background-color:#525798; border-color:#525798;"
+                                >Obračunaj još</a>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title extrabold">Korisnici</h5>
+                                <a href="adminsettings.html" class="btn btn-primary" 
+                                style="background-color:#525798; border-color:#525798;"
+                                >Dodaj korisnika</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title extrabold">Troškovi</h5>
+                                <img src="img/placeholder-graph.jpg" alt="" style="width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
             <div class="col-2" style="background-color:#5B6BBF; display:flex; align-items:center;">
                 <img src="img/guy-top-right.png" style="position:absolute; right:0; top:0; width:200px;" alt="">
-                <div></div>
                 <img src="img/rocket-small.png" style="position:absolute; right:0; bottom:0; width: 16.66666667%;" alt="">
             </div>
     </div>
@@ -196,6 +176,24 @@
                 sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
                 obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
             }
+
+            let zadnjiObracun = document.getElementById("zadnjiObracun");
+            let zadnji = obracuniUpdated.length-1;
+            let zadnjiObracunUserID = obracuniUpdated[zadnji]["userid"];
+            let zadnjiUser = usersUpdated[zadnjiObracunUserID-1];
+            let zadnjiObracunData = obracuniUpdated[zadnji];
+            
+            let zadnjiObracunHTML = `
+                <div class="col-3">
+                    <img style="width:70px; border-radius:20px;" src="img/no-user-image.jpg" alt="Slika korisnika">
+                </div>
+                <div class="col-9 ps-4">
+                    <p class="body-text">${zadnjiUser.firstname} ${zadnjiUser.lastname}</p>    
+                    <p class="body-text">Neto plaća: ${zadnjiObracunData.neto}€</p>
+                </div>
+            `;
+
+            zadnjiObracun.innerHTML = zadnjiObracunHTML;
         }
     </script>
 </body>

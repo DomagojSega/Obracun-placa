@@ -64,49 +64,64 @@
             if( document.getElementById("brutoPlaca").value == ""){
         
                 let selectedUserIndex = document.getElementById("selectZaposlenik").value;
-                let userID = parseInt(usersUpdated[selectedUserIndex]["id"]);
-                let selectedMjesec = parseInt(document.getElementById("mjesec").value);
-                let selectedGodina = parseInt(document.getElementById("godina").value);
-                let inputPrekRad = parseInt(document.getElementById("prekRad").value);
-                let inputBonusi = parseFloat(document.getElementById("bonusi").value);
-                let inputBolovanje = parseInt(document.getElementById("bolovanje").value);
-                let inputGodOdmor = parseInt(document.getElementById("godOdmor").value);
+                let userID1 = usersUpdated[selectedUserIndex]["id"];
+                let selectedMjesec1 = document.getElementById("mjesec").value;
+                let selectedGodina1 = document.getElementById("godina").value;
+                let inputPrekRad1 = document.getElementById("prekRad").value;
+                let inputBonusi1 = document.getElementById("bonusi").value;
+                let inputBolovanje1 = document.getElementById("bolovanje").value;
+                let inputGodOdmor1 = document.getElementById("godOdmor").value;
+                if(selectedUserIndex == "" || selectedMjesec1 == "" || selectedGodina1 == "" 
+                            || inputPrekRad1 == "" || inputBonusi1 == "" || inputBolovanje1 =="" || inputGodOdmor1 ==""){
+                                errorMessage.innerText = "Sva polja moraju biti ispunjena!"
+                            }
+                else{
+                    errorMessage.innerText = "";
 
-                let userSatnica = parseInt(usersUpdated[selectedUserIndex]["satnica"]);
-                let ukupnoSati = parseInt(stopeUpdated[0]["ukupnoSati"]);
-                let faktorPrekRad = parseFloat(stopeUpdated[0]["prekRad"]);
-                let faktorGodOdmor = parseFloat(stopeUpdated[0]["godOdmor"]);
-                let faktorBolovanje = parseFloat(stopeUpdated[0]["bolovanje"]);
-                let mirovinskiStup = parseFloat(stopeUpdated[0]["mirovinskiStup"]);
-                let porezStopa = parseFloat(stopeUpdated[0]["porez"]);
+                    let userID = parseInt(usersUpdated[selectedUserIndex]["id"]);
+                    let selectedMjesec = parseInt(document.getElementById("mjesec").value);
+                    let selectedGodina = parseInt(document.getElementById("godina").value);
+                    let inputPrekRad = parseInt(document.getElementById("prekRad").value);
+                    let inputBonusi = parseInt(document.getElementById("bonusi").value);
+                    let inputBolovanje = parseInt(document.getElementById("bolovanje").value);
+                    let inputGodOdmor = parseInt(document.getElementById("godOdmor").value);
 
-                let calcBruto = userSatnica * ((ukupnoSati - 8 * (inputGodOdmor + inputBolovanje)) +
-                                        8 * inputGodOdmor * faktorGodOdmor + 
-                                        8 * inputBolovanje * faktorBolovanje +
-                                        inputPrekRad * faktorPrekRad) + inputBonusi;
+                    let userSatnica = parseInt(usersUpdated[selectedUserIndex]["satnica"]);
+                    let ukupnoSati = parseInt(stopeUpdated[0]["ukupnoSati"]);
+                    let faktorPrekRad = parseFloat(stopeUpdated[0]["prekRad"]);
+                    let faktorGodOdmor = parseFloat(stopeUpdated[0]["godOdmor"]);
+                    let faktorBolovanje = parseFloat(stopeUpdated[0]["bolovanje"]);
+                    let mirovinskiStup = parseFloat(stopeUpdated[0]["mirovinskiStup"]);
+                    let porezStopa = parseFloat(stopeUpdated[0]["porez"]);
 
-                let calcNeto = (calcBruto * (100-mirovinskiStup)/100) * (100 - porezStopa)/100;
+                    let calcBruto = userSatnica * ((ukupnoSati - 8 * (inputGodOdmor + inputBolovanje)) +
+                                            8 * inputGodOdmor * faktorGodOdmor + 
+                                            8 * inputBolovanje * faktorBolovanje +
+                                            inputPrekRad * faktorPrekRad) + inputBonusi;
 
-                let obracunPush = {
-                    "id":obracuniUpdated.length+1,
-                    "userid":userID,
-                    "mjesec":selectedMjesec,
-                    "godina":selectedGodina,
-                    "prekovremeni":inputPrekRad,
-                    "bonusi":inputBonusi,
-                    "godisnji":inputGodOdmor,
-                    "bolovanje":inputBolovanje,
-                    "bruto":calcBruto,
-                    "neto":calcNeto
+                    let calcNeto = (calcBruto * (100-mirovinskiStup)/100) * (100 - porezStopa)/100;
+
+                    let obracunPush = {
+                        "id":obracuniUpdated.length+1,
+                        "userid":userID,
+                        "mjesec":selectedMjesec,
+                        "godina":selectedGodina,
+                        "prekovremeni":inputPrekRad,
+                        "bonusi":inputBonusi,
+                        "godisnji":inputGodOdmor,
+                        "bolovanje":inputBolovanje,
+                        "bruto":calcBruto,
+                        "neto":calcNeto
+                    }
+                    obracuniUpdated.push(obracunPush);
+                    sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
+                    handleUserChange();
+                    errorMessage.innerText = "";
+                    }
                 }
-                obracuniUpdated.push(obracunPush);
-                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuniUpdated));
-                handleUserChange();
-                errorMessage.innerText = "";
-            }
-            else{
-                errorMessage.innerText = "Ova plaća je već obračunata!";
-            } 
+                else{
+                    errorMessage.innerText = "Ova plaća je već obračunata!";
+                } 
         }
     </script>
 </head>
