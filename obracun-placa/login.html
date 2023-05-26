@@ -14,14 +14,17 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="src/users.js"></script>
+    <script src="src/obracuni.js"></script>
+    <script src="src/stope.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Obračun plaća</title>
     <script>
         const handleLogin = () => {
             let username = document.getElementById("username").value;
             let user_password = document.getElementById("password").value;
-            let userIndex=users.findIndex(user => user["username"] == username);
-            if(userIndex != -1 && users[userIndex]["password"] == user_password){
-                if (users[userIndex]["role"]=="admin"){
+            let userIndex=usersUpdated.findIndex(user => user["username"] == username);
+            if(userIndex != -1 && usersUpdated[userIndex]["password"] == user_password){
+                if (usersUpdated[userIndex]["role"]=="admin"){
                         document.getElementById("errorMessage").innerText = "";
                         sessionStorage.setItem("userIndex",userIndex);
                         window.location.href = "admindashboard.html";
@@ -76,5 +79,28 @@
             </div>
         </div>
 </div>
+<script>
+        let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+        let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+        let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+        let obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+
+        if(!obracuniUpdated){
+                sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
+                obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
+            }
+            if(!stopeUpdated){
+                sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
+                stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+            }
+            if(!usersUpdated){
+                sessionStorage.setItem("usersUpdated", JSON.stringify(users));
+                usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+            }
+            if(!obavijestiUpdated){
+                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
+                obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+            }
+</script>
 </body>
 </html>
