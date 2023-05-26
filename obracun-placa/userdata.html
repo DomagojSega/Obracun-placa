@@ -164,8 +164,8 @@
 
         window.onload = () => {
             let userFullName = document.getElementById("userFullName");
-            let firstname = users[userIndex]["firstname"];
-            let lastname = users[userIndex]["lastname"];
+            let firstname = usersUpdated[userIndex]["firstname"];
+            let lastname = usersUpdated[userIndex]["lastname"];
             userFullName.innerText=firstname + " " + lastname;
 
             
@@ -206,10 +206,10 @@
 
             userFirstName.value=firstname;
             userLastName.value=lastname;
-            userOIB.value=users[userIndex]["oib"];
-            userName.value=users[userIndex]["username"];
-            userHour.value=users[userIndex]["satnica"];
-            userName.value=users[userIndex]["username"];
+            userOIB.value=usersUpdated[userIndex]["oib"];
+            userName.value=usersUpdated[userIndex]["username"];
+            userHour.value=usersUpdated[userIndex]["satnica"];
+            userName.value=usersUpdated[userIndex]["username"];
             netoPlaca.value=calcNeto;
             
 
