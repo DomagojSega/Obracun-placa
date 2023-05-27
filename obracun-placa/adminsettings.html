@@ -16,6 +16,7 @@
     <script src="src/users.js"></script>
     <script src="src/obracuni.js"></script>
     <script src="src/stope.js"></script>
+    <script src="src/obavijesti.js"></script>
     <title>Obracun placa</title>
     <script>
         const handleLogout = () => {
@@ -32,33 +33,50 @@
             let userPassword = document.getElementById("userPassword").value;
             let userHour = document.getElementById("userHour").value;
             let errorMessage = document.getElementById("errorMessage");
+            let exists = usersUpdated.findIndex(u => u["username"] == userName);
+            
             if(userName == "" || userFirstName == "" || userLastName == "" 
                             || userOIB == "" || userPassword == "" || userHour ==""){
+                                errorMessage.classList.add("text-danger");
+                                errorMessage.classList.remove("text-success");
                                 errorMessage.innerText = "Sva polja moraju biti ispunjena!"
                             }
             else{
                 errorMessage.innerText = "";
+                if(exists==-1){
+                    let userPush={
+                                "id":userID,
+                                "username":userName,
+                                "password":userPassword,
+                                "firstname":userFirstName,
+                                "lastname":userLastName,
+                                "oib":parseInt(userOIB),
+                                "satnica":parseInt(userHour),
+                                "role":"user"
+                            };
+                    usersUpdated.push(userPush);
+                    sessionStorage.setItem("usersUpdated", JSON.stringify(usersUpdated));
+                        
+                    document.getElementById("userName").value="";
+                    document.getElementById("userFirstName").value="";
+                    document.getElementById("userLastName").value="";
+                    document.getElementById("userOIB").value="";
+                    document.getElementById("userPassword").value="";
+                    document.getElementById("userHour").value="";
 
-                let userPush={
-                            "id":userID,
-                            "username":userName,
-                            "password":userPassword,
-                            "firstname":userFirstName,
-                            "lastname":userLastName,
-                            "oib":parseInt(userOIB),
-                            "satnica":parseInt(userHour),
-                            "role":"user"
-                        };
-                usersUpdated.push(userPush);
-                sessionStorage.setItem("usersUpdated", JSON.stringify(usersUpdated));
-                
-                document.getElementById("userName").value="";
-                document.getElementById("userFirstName").value="";
-                document.getElementById("userLastName").value="";
-                document.getElementById("userOIB").value="";
-                document.getElementById("userPassword").value="";
-                document.getElementById("userHour").value="";
-            }   
+                    errorMessage.classList.add("text-success");
+                    errorMessage.classList.remove("text-danger");
+                    errorMessage.innerText = "Korisnik uspješno dodan!";
+                    setTimeout(() => {
+                        errorMessage.innerText = "";
+                    }, 3000);
+                }
+                else{
+                    errorMessage.classList.add("text-danger");
+                    errorMessage.classList.remove("text-success");
+                    errorMessage.innerText = "Korisničko ime je zauzeto!";
+                }  
+            } 
         }
     </script>
 </head>
@@ -107,9 +125,6 @@
                 <div class="row"><span class="fa-solid fa-gear" style="color:#343857; font-size:38px;"></span></div>
                 <div class="row nav-active" style="font-size:37px; padding:12px;">Postavke</div>
                 <div class="row body-text"><p>Dodaj novog korisnika</p></div>
-                    
-                
-
 
                 <div class="form-floating mb-3 col-6">
                     <input type="text" class="form-control" id="userFirstName" placeholder="Ime">
@@ -145,8 +160,8 @@
                         style="background-color:#525798; border-color:#525798; width:40%;"
                         onclick="handleUserAdd()">DODAJ</button>
                 </div>
-                <div class="col-6 pt-4 mb-4 body-text text-center" 
-                    style="color:red; font-size:20px;">
+                <div class="col-6 pt-4 mb-4 extrabold text-center" 
+                    style="font-size:20px;">
                     <p id="errorMessage" ></p>
                 </div>
             </div>
@@ -164,6 +179,8 @@
         let obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
         let stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
         let usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+        let obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+        let userIndex = parseInt(sessionStorage.getItem("userIndex"));
 
         window.onload = () => {
             const mjeseci = ["Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"];
@@ -187,7 +204,10 @@
                 sessionStorage.setItem("usersUpdated", JSON.stringify(users));
                 usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
             }
-            
+            if(!obavijestiUpdated){
+                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
+                obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+            }
         }
     </script>
 </body>

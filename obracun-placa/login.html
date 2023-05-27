@@ -16,6 +16,7 @@
     <script src="src/users.js"></script>
     <script src="src/obracuni.js"></script>
     <script src="src/stope.js"></script>
+    <script src="src/obavijesti.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Obračun plaća</title>
     <script>
@@ -23,6 +24,8 @@
             let username = document.getElementById("username").value;
             let user_password = document.getElementById("password").value;
             let userIndex=usersUpdated.findIndex(user => user["username"] == username);
+            let errorMessage=document.getElementById("errorMessage");
+
             if(userIndex != -1 && usersUpdated[userIndex]["password"] == user_password){
                 if (usersUpdated[userIndex]["role"]=="admin"){
                         document.getElementById("errorMessage").innerText = "";
@@ -36,7 +39,10 @@
                     }
                 }
             else{
-                document.getElementById("errorMessage").innerText = "Nepostojeći korisnik!";
+                errorMessage.innerText = "Nepostojeći korisnik!";
+                setTimeout(() => {
+                    errorMessage.innerText = "";
+                }, 3000);
                 }
             }
     </script>
@@ -72,10 +78,13 @@
                     id="password" placeholder="Password">
                     <label for="password">Lozinka</label>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg w-50 mb-5" 
+                <button type="button" class="btn btn-primary btn-lg w-50" 
                 style="background-color:#525798; border-color:#525798;"
                 onclick="handleLogin()">LOGIN</button>
-                <div id="errorMessage" class="body-text" style="color:red;"></div>
+                <div class="col-6 mt-4 extrabold text-center text-danger" 
+                    style="font-size:20px; height:2rem;">
+                    <p id="errorMessage" ></p>
+                </div>
             </div>
         </div>
 </div>
@@ -88,19 +97,25 @@
         if(!obracuniUpdated){
                 sessionStorage.setItem("obracuniUpdated", JSON.stringify(obracuni));
                 obracuniUpdated=JSON.parse(sessionStorage.getItem("obracuniUpdated"));
-            }
-            if(!stopeUpdated){
-                sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
-                stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
-            }
-            if(!usersUpdated){
-                sessionStorage.setItem("usersUpdated", JSON.stringify(users));
-                usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
-            }
-            if(!obavijestiUpdated){
-                sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
-                obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
-            }
+        }
+        if(!stopeUpdated){
+            sessionStorage.setItem("stopeUpdated", JSON.stringify(stope));
+            stopeUpdated=JSON.parse(sessionStorage.getItem("stopeUpdated"));
+        }
+        if(!usersUpdated){
+            sessionStorage.setItem("usersUpdated", JSON.stringify(users));
+            usersUpdated=JSON.parse(sessionStorage.getItem("usersUpdated"));
+        }
+        if(!obavijestiUpdated){
+            sessionStorage.setItem("obavijestiUpdated", JSON.stringify(obavijesti));
+            obavijestiUpdated=JSON.parse(sessionStorage.getItem("obavijestiUpdated"));
+        }
+
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+                }
+        });
 </script>
 </body>
 </html>

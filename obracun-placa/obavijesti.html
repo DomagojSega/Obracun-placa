@@ -107,7 +107,18 @@
 
             let obavijestiHTML = document.getElementById("mapObavijesti");
             let obavijestiInput = "";
-            obavijestiUpdated.map(ob => {
+            let obavijestiUpdatedReversed = [...obavijestiUpdated].reverse();
+            
+            // obavijestiUpdatedReversed.map(ob => {
+            //     obavijestiInput +=`
+            //         <div class="shadow-lg p-3 mt-2 bg-body rounded">
+            //             <p class="notifications-title">${ob.naslov}</p>
+            //             <p class="label-text">${ob.tekst}</p>
+            //         </div>
+            //     `;
+            // })
+
+            [...obavijestiUpdated].reverse().map(ob => {
                 obavijestiInput +=`
                     <div class="shadow-lg p-3 mt-2 bg-body rounded">
                         <p class="notifications-title">${ob.naslov}</p>
@@ -115,6 +126,7 @@
                     </div>
                 `;
             })
+
             obavijestiHTML.innerHTML=obavijestiInput;
         }
     </script>
