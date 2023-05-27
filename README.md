@@ -11,7 +11,13 @@ password: 123
 
 ----------------
 
-obični korisnik (nije još napravljena landing stranica)
+obični korisnik 
 
 username: domi
+password: 123
+
+username: gašo
+password: 321
+
+username: mile
 password: 123
